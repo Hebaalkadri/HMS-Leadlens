@@ -62,15 +62,43 @@ header h1 {
 }
 
         /* Layout: Grid with 3 columns: Sidebar | Content | Chat */
-        /* Layout: Grid with 3 columns: Sidebar | Content | Chat */
         .container {
             display: grid;
-            background-color: #020202;
+            background-color: #4eaa8a;
             grid-template-columns: 250px 2fr 1fr; 
             flex: 1;
             overflow: hidden;
         }
 
+        .container2 {
+    background-color: #1a1a1a; /* Dunkler Hintergrund */
+    border: 1px solid #444; /* Rahmen für einen klaren Look */
+    border-radius: 10px; /* Abgerundete Ecken */
+    padding: 1rem; /* Innenabstand */
+    margin: 1rem 0; /* Abstand nach außen */
+    text-align: center; /* Zentrierter Text */
+    color: #f1c40f; /* Helle Akzentfarbe für den Text */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Schatteneffekt */
+}
+
+.container2 h1 {
+    font-size: 0.5rem; /* Größerer Titeltext */
+    margin-bottom: 1rem; /* Abstand unter dem Titel */
+    color: #44c4b5; /* Oranger Akzent */
+    font-weight: bold; /* Fettdruck */
+}
+
+.container2 h2 {
+    font-size: 0.5rem; /* Mittelgroßer Text für Standorte */
+    margin-bottom: 0.5rem;
+    color: #44c4b5; /* Leichtes Grau */
+}
+
+.container2 .time-info {
+    font-size: 1rem; /* Kleinere Schrift für Zeit */
+    color: #bdc3c7; /* Gedämpftes Grau */
+    margin-bottom: 1rem;
+}
         /* Sidebar */
         .sidebar { 
             background-color: #020202;
@@ -246,7 +274,9 @@ header h1 {
 
            
             <div class="photo-container">
-            <img src="/Users/heba/Downloads/ logo2.jpg" alt="Dashboard Photo" style="width: 30%;">
+                <img src="https://i.imgur.com/dAEpckI.png" alt="Dashboard Photo" style="width: 30%;">
+            </div>
+            
        
         </div>
         </div>
@@ -255,17 +285,18 @@ header h1 {
         <div class="sidebar">
             <h2>Dashboard Menu</h2>
             <p>Gear up—it's time to own this investigative game like a boss! </p>🔥🕵️‍♀️</p>
+            <div class="container2">
+                
+                <h2 id="location-berlin">Location: Berlin</h2>
+                <div id="time-berlin" class="time-info">Time in Berlin: Loading...</div>
+                <h2 id="location-moscow">Location: Moscow</h2>
+                <div id="time-moscow" class="time-info">Time in Moscow: Loading...</div>
+            </div>
             <div class="button-container">
                 <button onclick="fetchEurostatData('DEMO_R_D3DENS', 'country')">Population Density</button>
                 <button onclick="fetchEurostatData('nama_10_gdp', 'country')">GDP Data</button>
                 <button onclick="callai()">Chat (Test)</button>
-            </div>
-            <h2>Oil prises </h2>
-            <div id="oilPricesContainer">
-                <h2 id="apiStatus">Loading Oil Prices...</h2>
-                <div id="apiResults">
-                    <!-- Oil prices data will be loaded here automatically -->
-                </div>
+                <button onclick="fetchOilPrices()">Oil Prices</button>
             </div>
         </div>
         <div class="content">
@@ -292,6 +323,33 @@ header h1 {
     </div>
 
     <script>
+
+                function updateTime() {
+            // Time for Berlin
+            const berlinTime = new Intl.DateTimeFormat('en-GB', {
+                timeZone: 'Europe/Berlin',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            }).format(new Date());
+            document.getElementById('time-berlin').textContent = `Time in Berlin: ${berlinTime}`;
+
+            // Time for Moscow
+            const moscowTime = new Intl.DateTimeFormat('en-GB', {
+                timeZone: 'Europe/Moscow',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            }).format(new Date());
+            document.getElementById('time-moscow').textContent = `Time in Moscow: ${moscowTime}`;
+        }
+
+        // Update time every second
+        setInterval(updateTime, 1000);
+
+        // Initial call to set the time immediately
+        updateTime();
+
         // Predefined oil commodities for demonstration
         const OIL_COMMODITIES = [
             'Crude Oil Brent',
