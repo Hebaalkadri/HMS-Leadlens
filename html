@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Dashboard</title>
+    <style>
+           :root {
+            
+            --bg-sidebar: #151516;
+            --bg-card: hsl(240, 3%, 6%);
+            --accent: #f1c40f;
+            --text-light: #ecf0f1;
+            --text-muted: #bdc3c7;
+            --text-error: #e74c3c;
+            --transition: 0.3s ease;
+            --button-bg: #4e5d6a;
+            --button-hover: hsl(172, 71%, 38%);
+            --font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            font-family: var(--font-family);
+            background-color: #151516;
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        
+        /* Top Navbar */
+        header {
+    height: 25vh; /* 19% of the viewport height */
+    display: flex;
+    padding: 0;
+    background-color: #000000; /* No background for logo container */
+}
+
+header {
+    height: 19vh; /* Header takes up 25% of the viewport height */
+    display: flex;
+    align-items: center; /* Vertically align the content */
+    justify-content: space-between; /* Space out the logo and text */
+    padding: 0 2rem; /* Add horizontal padding for spacing */
+   
+
+}
+
+header img {
+    max-height: 80%; /* Logo resizes to stay within 80% of the header */
+    height: auto;
+    width: auto; /* Ensure proportions are maintained */
+}
+
+header h1 {
+    font-size: 2.5rem; /* Adjust font size for prominence */
+    margin: 0;
+    background-color: #020202;
+        align-self: flex-end; /* Align the text to the bottom of the header */
+}
+
+        /* Layout: Grid with 3 columns: Sidebar | Content | Chat */
+        /* Layout: Grid with 3 columns: Sidebar | Content | Chat */
+        .container {
+            display: grid;
+            background-color: #020202;
+            grid-template-columns: 250px 2fr 1fr; 
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar { 
+            background-color: #020202;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            margin: 0;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            background-color: #050505;
+        }
+
+        .sidebar p {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            background-color: #020202;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+        
+        }
+
+        .button-container button {
+            background-color: #d1c9c9;
+            color: #080808;
+            border: none;
+            border-radius: 5px;
+            padding: 0.8rem 1rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-bottom: 0.5rem;
+            transition: background-color var(--transition);
+            text-align: left;
+        }
+
+        .button-container button:hover {
+            background-color: var(--button-hover);
+        }
+
+
+       /* Main Content Area */
+       .content {
+            background-color: #050505;
+            color: #333;
+            padding: 1.5rem;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        #apiStatus {
+            font-size: 1.1rem;
+            margin: 0 0 1rem 0;
+            color: var(--bg-dark);
+            font-weight: bold;
+        }
+
+        #apiResults {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 1rem;
+            border-radius: 8px;
+            max-width: 100%;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            font-family: monospace;
+            color: #333;
+        }
+
+        .error {
+            color: var(--text-error);
+        }
+
+        /* RSS Feeds */
+        #rss-feeds {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        #rss-feeds .rss-feed h2 {
+            margin: 0;
+            margin-bottom: 0.5rem;
+            color: var(--bg-dark);
+            font-size: 1.1rem;
+        }
+
+        #rss-feeds .rss-item {
+            margin-bottom: 0.5rem;
+        }
+
+        #rss-feeds .rss-item a {
+            color: var(--button-hover);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        #rss-feeds .rss-item p {
+            margin: 0.2rem 0;
+            color: #333;
+        }
+
+       /* Chat Column */
+       .chat-column {
+            background-color: #020202;
+            color: #17a1a1;
+            padding: 1.5rem;
+            box-sizing: border-box;
+            overflow-y: auto;
+            border-left: 1px solid #ddd;
+        }
+
+        .chat-section {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .chat-section h2 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            color: var(--bg-dark);
+        }
+
+        #userInput {
+            width: calc(100% - 110px);
+            padding: 0.6rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 0.5rem;
+            font-size: 1rem;
+        }
+
+        #result {
+            margin-top: 1rem;
+            background: #f2f2f2;
+            border: 1px solid #ccc;
+            padding: 1rem;
+            border-radius: 5px;
+            min-height: 100px;
+            white-space: pre-wrap;
+        }
+
+        #send-chat-btn {
+            background: var(--button-bg);
+            color: #010101;
+            border: none;
+            border-radius: 5px;
+            padding: 0.6rem 1rem;
+            cursor: pointer;
+            transition: background-color var(--transition);
+        }
+
+        #send-chat-btn:hover {
+            background: var(--button-hover);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+
+           
+            <div class="photo-container">
+            <img src="/Users/heba/Downloads/ logo2.jpg" alt="Dashboard Photo" style="width: 30%;">
+       
+        </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="sidebar">
+            <h2>Dashboard Menu</h2>
+            <p>Gear up—it's time to own this investigative game like a boss! </p>🔥🕵️‍♀️</p>
+            <div class="button-container">
+                <button onclick="fetchEurostatData('DEMO_R_D3DENS', 'country')">Population Density</button>
+                <button onclick="fetchEurostatData('nama_10_gdp', 'country')">GDP Data</button>
+                <button onclick="callai()">Chat (Test)</button>
+            </div>
+            <h2>Oil prises </h2>
+            <div id="oilPricesContainer">
+                <h2 id="apiStatus">Loading Oil Prices...</h2>
+                <div id="apiResults">
+                    <!-- Oil prices data will be loaded here automatically -->
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <h2 id="apiStatus"></h2>
+            <div id="apiResults">
+                <!-- API results will be displayed here -->
+            </div>
+
+            <!-- RSS Feeds -->
+            <div id="rss-feeds"></div>
+        </div>
+
+        <!-- Chat Column -->
+        <div class="chat-column">
+            <div class="chat-section">
+                <h2>Chat with GPT-2</h2>
+                <div style="display:flex; align-items:center;">
+                    <input type="text" id="userInput" placeholder="Enter your message" />
+                    <button id="send-chat-btn" onclick="callai2()">Send</button>
+                </div>
+                <div id="result"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Predefined oil commodities for demonstration
+        const OIL_COMMODITIES = [
+            'Crude Oil Brent',
+            'Crude Oil WTI',
+            'Natural Gas',
+            'Gasoline',
+            'Heating Oil'
+        ];
+
+        // Eurostat Data Fetch Function
+        async function fetchEurostatData(datasetCode, geoLevel = 'country', year = '2022') {
+            const apiUrl = `https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/${datasetCode}?lang=EN&geoLevel=${geoLevel}&time=${year}`;
+            const apiResultsDiv = document.getElementById('apiResults');
+            const apiStatusDiv = document.getElementById('apiStatus');
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                apiStatusDiv.textContent = `Loaded ${datasetCode} Dataset`;
+                apiResultsDiv.innerHTML = `
+                    <h3>Dataset: ${data.label}</h3>
+                    <p>Source: ${data.source}</p>
+                    <p>Last Updated: ${data.updated}</p>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+            } catch (error) {
+                console.error('API Fetch Error:', error);
+                apiStatusDiv.textContent = 'API Data Fetch Failed';
+                apiResultsDiv.innerHTML = `
+                    <div class="error">
+                        <h3>Error Fetching Data</h3>
+                        <p>${error.message}</p>
+                        <p>Note: Direct browser API calls may be blocked. You'll need a backend proxy.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Oil Prices Fetch Function
+        async function fetchOilPrices() {
+            const apiResultsDiv = document.getElementById('apiResults');
+            const apiStatusDiv = document.getElementById('apiStatus');
+
+            try {
+                // Simulate API data for oil prices since direct API access is restricted
+                const mockOilPricesData = OIL_COMMODITIES.map(commodity => ({
+                    name: commodity,
+                    price: (Math.random() * 100).toFixed(2),
+                    currency: 'USD',
+                    change: (Math.random() * 10 - 5).toFixed(2) + '%'
+                }));
+
+                apiStatusDiv.textContent = 'Loaded Oil Prices';
+                apiResultsDiv.innerHTML = `
+                    <h3>Current Oil Commodities Prices</h3>
+                    <table style="width:100%; border-collapse: collapse; font-size:0.9rem;">
+                        <tr>
+                            <th style="border: 1px solid #ddd; padding: 8px;">Commodity</th>
+                            <th style="border: 1px solid #ddd; padding: 8px;">Price</th>
+                            <th style="border: 1px solid #ddd; padding: 8px;">Change</th>
+                        </tr>
+                        ${mockOilPricesData.map(item => `
+                        <tr>
+                            <td style="border: 1px solid #ddd; padding: 8px;">${item.name}</td>
+                            <td style="border: 1px solid #ddd; padding: 8px;">${item.price} ${item.currency}</td>
+                            <td style="border: 1px solid #ddd; padding: 8px; color: ${item.change.startsWith('-') ? 'red' : 'green'}">
+                            ${item.change}
+                            </td>
+                        </tr>
+                        `).join('')}
+                    </table>
+                    <p style="font-size: 0.8em; color: #aaa;">Note: Prices are simulated</p>
+                `;
+            } catch (error) {
+                console.error('Oil Prices Fetch Error:', error);
+                apiStatusDiv.textContent = 'Oil Prices Data Fetch Failed';
+                apiResultsDiv.innerHTML = `
+                    <div class="error">
+                        <h3>Error Fetching Oil Prices</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // HUGGING FACE - Test Call
+        async function callai() {
+            const api_url = "https://api-inference.huggingface.co/models/bert-base-uncased";
+
+            const payload = JSON.stringify({
+                "inputs": "What is the capital of Russia? [MASK]."
+            });
+
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("POST", api_url, true);
+            xmlHttp.setRequestHeader("Authorization", "Bearer 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");
+            xmlHttp.setRequestHeader("Content-Type", "application/json");
+
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState === 4) {
+                    if (xmlHttp.status === 200) {
+                        console.log("Response:", xmlHttp.responseText);
+                    } else {
+                        console.error("Error:", xmlHttp.status, xmlHttp.responseText);
+                    }
+                }
+            };
+
+            xmlHttp.send(payload);
+        }
+
+        // HUGGING FACE - GPT2 Call
+        async function callai2() {
+            const api_url = "https://api-inference.huggingface.co/models/gpt2";
+            const HUGGING_FACE_TOKEN = "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";
+            const userMessage = document.getElementById('userInput').value;
+
+            const payload = JSON.stringify({ "inputs": userMessage });
+
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("POST", api_url, true);
+            xmlHttp.setRequestHeader("Authorization", "Bearer " + HUGGING_FACE_TOKEN);
+            xmlHttp.setRequestHeader("Content-Type", "application/json");
+
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState === 4) {
+                    const resultDiv = document.getElementById('result');
+                    if (xmlHttp.status === 200) {
+                        const response = JSON.parse(xmlHttp.responseText);
+                        if (response && response.length > 0 && response[0].generated_text) {
+                            resultDiv.innerText = response[0].generated_text;
+                        } else {
+                            resultDiv.innerText = "No response returned.";
+                        }
+                    } else {
+                        resultDiv.innerText = "Error: " + xmlHttp.status + " " + xmlHttp.responseText;
+                    }
+                }
+            };
+
+            xmlHttp.send(payload);
+        }
+
+        // RSS Feeds
+        const rssFeeds = [
+           { title: 'RSS FEED', url: 'https://ft.com/world?format=rss' }
+        ];
+
+        function fetchRSSFeed(url) {
+            return fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`)
+                .then(response => response.json())
+                .then(data => new window.DOMParser().parseFromString(data.contents, "text/xml"));
+        }
+
+        function parseRSS(xml) {
+            const items = [];
+            const entries = xml.querySelectorAll("item");
+            entries.forEach(entry => {
+                items.push({
+                    title: entry.querySelector("title").textContent,
+                    link: entry.querySelector("link").textContent,
+                    description: entry.querySelector("description") ? entry.querySelector("description").textContent : ''
+                });
+            });
+            return items;
+        }
+
+        function displayRSSFeed(feedTitle, feedItems) {
+            const feedsContainer = document.getElementById('rss-feeds');
+            const feedDiv = document.createElement('div');
+            feedDiv.className = 'rss-feed';
+
+            const feedTitleElement = document.createElement('h2');
+            feedTitleElement.textContent = feedTitle;
+            feedDiv.appendChild(feedTitleElement);
+
+            feedItems.slice(0, 5).forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'rss-item';
+
+                const itemLink = document.createElement('a');
+                itemLink.href = item.link;
+                itemLink.target = '_blank';
+                itemLink.textContent = item.title;
+                itemDiv.appendChild(itemLink);
+
+                if (item.description) {
+                    const itemDescription = document.createElement('p');
+                    itemDescription.textContent = item.description;
+                    itemDiv.appendChild(itemDescription);
+                }
+
+                feedDiv.appendChild(itemDiv);
+            });
+
+            feedsContainer.appendChild(feedDiv);
+        }
+
+        async function loadRSSFeeds() {
+            for (const feed of rssFeeds) {
+                try {
+                    const xml = await fetchRSSFeed(feed.url);
+                    const items = parseRSS(xml);
+                    displayRSSFeed(feed.title, items);
+                } catch (error) {
+                    console.error(`Error fetching ${feed.title}:`, error);
+                }
+            }
+        }
+
+        loadRSSFeeds();
+    </script>
+</body>
+</html>
